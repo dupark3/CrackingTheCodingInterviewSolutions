@@ -12,51 +12,55 @@ Given two strings, write a function to check if they are one edit away
 
 using namespace std;
 
-bool OneAway(const string& input1, const string& input2){
-    ssize_t size_diff = input1.size() - input2.size();
+
+bool OneAwayByReplace(const string& input1, const string& input2){
+    size_t input_size = input1.size();
     bool one_char_diff = false;
 
-    // replace situation like pale --> bale
+    for (size_t i = 0; i!= input_size; ++i){
+        if (input1[i] == input2[i]){
+            ;
+        } else if (input1[i] != input2[i] && !one_char_diff) {
+            one_char_diff = true;
+        } else {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+bool OneAwayByInsert(const string& input1, const string& input2){
+    bool one_char_diff = false;
+    
+    for (size_t i = 0, j = 0; i != input1.size() && j != input2.size(); ++i, ++j){
+        if (input1[i] == input2[j]){
+        } else if (input1[i] != input2[j] && !one_char_diff){
+
+            one_char_diff = true;
+            if (input1[i + 1] == input2[j]){
+                ++i;
+            } else if (input1[i] == input2[j + 1]){
+                ++j;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+    
+    return true;
+}
+
+bool OneAway(const string& input1, const string& input2){
+    ssize_t size_diff = input1.size() - input2.size();
+
     if (size_diff == 0){
-        size_t input_size = input1.size();
-
-        for (size_t i = 0; i!= input_size; ++i){
-            if (input1[i] == input2[i]){
-                ;
-            } else if (input1[i] != input2[i] && !one_char_diff) {
-                one_char_diff = true;
-            } else {
-                return false;
-            }
-        }
-
-        return true;
-
-    // insert or remove situation with one size difference
+        return OneAwayByReplace(input1, input2);
     } else if (abs(size_diff) == 1) {
-        for (size_t i = 0, j = 0; i != input1.size() && j != input2.size(); ++i, ++j){
-            if (input1[i] == input2[j]){
-            } else if (input1[i] != input2[j] && !one_char_diff){
-
-                one_char_diff = true;
-                if (input1[i + 1] == input2[j]){
-                    ++i;
-                } else if (input1[i] == input2[j + 1]){
-                    ++j;
-                } else {
-                    return false;
-                }
-            } else {
-                return false;
-            }
-        }
-        
-        return true;
-
-    } 
-
-    // not one edit distance away otherwise
-    else {
+        return OneAwayByInsert(input1, input2);
+    } else {
         return false;
     }
 }
