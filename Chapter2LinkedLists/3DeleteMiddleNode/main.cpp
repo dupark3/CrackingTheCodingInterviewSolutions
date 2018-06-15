@@ -53,6 +53,10 @@ class node {
 
 template <class T>
 node<T>* delete_middle_node(node<T>*& middle_node){
+    if (!middle_node || !middle_node->next){
+        return 0;
+    }
+
     node<T>* return_node = middle_node;
     int count = 1;
     while(middle_node->next){
