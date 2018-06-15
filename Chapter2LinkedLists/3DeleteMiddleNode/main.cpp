@@ -52,17 +52,22 @@ class node {
 /***************** SOLUTION TO THE PROBLEM ***********************/
 
 template <class T>
-node<T>* delete_middle_node(List<T>& linked_list, node<T>*& middle_node){
-    node<T>* temp = linked_list.begin();
-    
-    // advance a pointer to the node preceding the middle node
-    while (temp->next != middle_node){
-        temp = temp->next;
+node<T>* delete_middle_node(node<T>*& middle_node){
+    node<T>* return_node = middle_node;
+    int count = 1;
+    while(middle_node->next){
+        middle_node->element = middle_node->next->element;
+
+        // if at the second to last node, delete next node and set next to zero
+        if(middle_node->next->next == 0){
+            delete middle_node->next;
+            middle_node->next = 0;
+        } else {
+            middle_node = middle_node->next;
+        }
     }
 
-    temp->next = middle_node->next;
-    delete middle_node;
-    return temp->next;
+    return return_node;
 }
 
 
@@ -82,7 +87,7 @@ int main(){
     }
     cout << endl;
 
-    delete_middle_node(my_list, middle_node);
+    delete_middle_node(middle_node);
 
     cout << "MIDDLE DELETED: ";
     for (auto i = my_list.begin(); i != 0; i = i->next){
