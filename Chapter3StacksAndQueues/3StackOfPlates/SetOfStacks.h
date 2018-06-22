@@ -42,7 +42,11 @@ public:
     bool isEmpty(){
         return !stack_pointers.empty();
     }
-
+    T peek(){
+        if(!stack_pointers.empty()){
+            return stack_pointers[top_stack_index]->peek();
+        }
+    }
     void print(){
         if(!stack_pointers.empty()){
             for (int i = top_stack_index; i != -1; --i){

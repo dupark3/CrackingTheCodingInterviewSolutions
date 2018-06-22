@@ -31,6 +31,7 @@ int main(){
 
     cout << my_set_of_stacks.pop() << endl;
     cout << my_set_of_stacks.pop() << endl;
+    cout << my_set_of_stacks.peek() << endl;
     cout << my_set_of_stacks.pop() << endl;
 
     my_set_of_stacks.print();
