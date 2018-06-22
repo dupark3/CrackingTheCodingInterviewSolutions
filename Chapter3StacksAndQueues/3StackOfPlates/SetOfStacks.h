@@ -29,6 +29,7 @@ public:
         if(!stack_pointers.empty()){
             T return_value = stack_pointers[top_stack_index]->pop();
             if (stack_pointers[top_stack_index]->height == 0){
+                delete stack_pointers[top_stack_index];
                 --top_stack_index;
                 stack_pointers.pop_back();
             }
@@ -49,6 +50,7 @@ public:
             }
         }
     }
+
 
 private:
     std::vector< Stack<T>* > stack_pointers;

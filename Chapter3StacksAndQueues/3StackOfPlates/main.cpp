@@ -28,11 +28,12 @@ int main(){
     my_set_of_stacks.push(0);
 
     my_set_of_stacks.print();
-    /*
+
+    cout << my_set_of_stacks.pop() << endl;
     cout << my_set_of_stacks.pop() << endl;
     cout << my_set_of_stacks.pop() << endl;
 
-    my_set_of_stacks.print();*/
+    my_set_of_stacks.print();
 
     return 0;
 }
