@@ -29,12 +29,14 @@ int main(){
 
     my_set_of_stacks.print();
 
-    cout << my_set_of_stacks.pop() << endl;
-    cout << my_set_of_stacks.pop() << endl;
-    cout << my_set_of_stacks.peek() << endl;
-    cout << my_set_of_stacks.pop() << endl;
+    cout << "Popping at index 0 : " << my_set_of_stacks.pop_at(0) << endl;
+    cout << "Popping at index 1 : " << my_set_of_stacks.pop_at(1) << endl;
+    cout << "Popping at index 0 : " << my_set_of_stacks.pop_at(0) << endl;
+
+    cout << "Peeking : " << my_set_of_stacks.peek() << endl;
 
     my_set_of_stacks.print();
+
 
     return 0;
 }

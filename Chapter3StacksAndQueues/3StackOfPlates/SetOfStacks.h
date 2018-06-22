@@ -42,11 +42,28 @@ public:
     bool isEmpty(){
         return !stack_pointers.empty();
     }
+
     T peek(){
         if(!stack_pointers.empty()){
             return stack_pointers[top_stack_index]->peek();
         }
     }
+
+    T pop_at(int n){
+        if(n <= top_stack_index){
+            T ret_value = stack_pointers[n]->pop();
+            if (stack_pointers[n]->height == 0){
+                auto iterator_pos = stack_pointers.begin() + n;
+                delete stack_pointers[n];
+                --top_stack_index;
+                stack_pointers.erase(iterator_pos);
+            }
+            return ret_value;
+        } else {
+            return T();
+        }
+    }
+
     void print(){
         if(!stack_pointers.empty()){
             for (int i = top_stack_index; i != -1; --i){
