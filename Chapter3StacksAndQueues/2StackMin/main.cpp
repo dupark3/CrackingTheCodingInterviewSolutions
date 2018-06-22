@@ -15,9 +15,10 @@ class Node {
 
     public: 
         Node() { }
-        Node(T val) : element(val), down(0) { }
+        Node(T val) : element(val), min_element(), down(0) { }
     
         T element;
+        T min_element;
         Node<T>* down;
 };
 
@@ -45,10 +46,13 @@ public:
             Node<T>* new_top = new Node<T>(val);
             new_top->down = top;
             top = new_top;
-            min_element = val < min_element ? val : min_element;
+
+            top->min_element = val < top->down->min_element ? 
+                               val : top->down->min_element;
         } else {
             top = new Node<T>(val);
-            min_element = val;
+            top->min_element = val;
+            top->down = 0;
         }
     }
 
@@ -65,12 +69,22 @@ public:
     }
 
     int min(){
-        return min_element;
+        if (top){
+            return top->min_element;
+        }
+    }
+
+    void print(){
+        Node<T>* iterator = top;
+        while (iterator){
+            cout << iterator->element << " ";
+            iterator = iterator->down;
+        }
+        cout << endl;
     }
 
 private:
     Node<T>* top;
-    T min_element;
 };
 
 
@@ -83,17 +97,24 @@ int main(){
     if (my_stack.isEmpty()){
         cout << "Empty stack\n";
     }
-
+    
     my_stack.push(5);
+    my_stack.push(4);
     my_stack.push(2);
     my_stack.push(7);
     my_stack.push(10);
-    my_stack.push(9);
+    my_stack.push(15);
+    my_stack.push(1);
+
+    my_stack.print();
+
+    cout << "Min is : " << my_stack.min() << endl;
 
     cout << my_stack.pop() << endl;
-    cout << my_stack.peek() << endl;
     cout << my_stack.pop() << endl;
-    cout << my_stack.peek() << endl;
+
+    my_stack.print();
+
     cout << "Min is : " << my_stack.min() << endl;
 
     return 0;
