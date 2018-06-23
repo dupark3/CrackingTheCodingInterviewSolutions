@@ -20,7 +20,15 @@ int main(){
     if (my_stack.isEmpty()){
         cout << "sort stack is empty\n";
     }
-    
+
+    my_stack.push(5);
+    my_stack.push(2);
+    my_stack.push(1);
+    my_stack.push(4);
+    my_stack.print();
+    my_stack.push(3);
+    my_stack.print();
+
     cout << my_stack.pop() << endl;
     cout << my_stack.peek() << endl;
     return 0;

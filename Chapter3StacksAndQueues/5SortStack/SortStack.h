@@ -1,6 +1,9 @@
 #ifndef GUARD_SortStack_h
 #define GUARD_SortStack_h
 
+#include <iostream>
+
+
 template <class T> class SortStack;
 
 template <class T>
@@ -8,7 +11,8 @@ class Node{
 
 friend class SortStack<T>;
 public:
-    Node();
+    Node() : element(T()), below(0) { }
+    Node(T val) : element(val), below(0) { }
 private:
     T element;
     Node<T>* below;
@@ -24,7 +28,24 @@ public:
         if (top){
             SortStack<T> temp_stack;
             
-            // 5 4 2 1  << 3
+            // pop smaller items until we find the place to push the new value
+            // save the smaller items into a temp stack in reverse order
+            while(top->element < val){
+                temp_stack.simple_push(pop());
+            }
+            
+            // set new top as usual
+            Node<T>* new_top = new Node<T>(val);
+            new_top->below = top;
+            top = new_top;
+            
+            // load back the temp stack on top of the new val
+            while(!temp_stack.isEmpty()){
+                simple_push(temp_stack.pop());
+            }
+
+        } else {
+            top = new Node<T>(val);
         }
     }
 
@@ -51,10 +72,29 @@ public:
     bool isEmpty(){
         return !top;
     }
+
+    void print(){
+        Node<T>* temp_pointer = top;
+        while(temp_pointer){
+            std::cout << temp_pointer->element << " ";
+            temp_pointer = temp_pointer->below;
+        }
+        std::cout << std::endl;
+    }
     
 
 private:
     Node<T>* top;
+
+    void simple_push(T val){
+        if (top){
+            Node<T>* new_top = new Node<T>(val);
+            new_top->below = top;
+            top = new_top;
+        } else {
+            top = new Node<T>(val);
+        }
+    }
 };
 
 #endif
