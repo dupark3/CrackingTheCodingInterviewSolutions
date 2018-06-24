@@ -4,12 +4,12 @@
 #include <iostream>
 
 
-template <class T> class SortStack;
+template <class T> class Stack;
 
 template <class T>
 class Node{
 
-friend class SortStack<T>;
+friend class Stack<T>;
 public:
     Node() : element(T()), below(0) { }
     Node(T val) : element(val), below(0) { }
@@ -19,31 +19,17 @@ private:
 };
 
 template <class T>
-class SortStack{
+class Stack{
 
 public:
-    SortStack(): top(0) { }
+    Stack(): top(0) { }
     
     void push(T val){
         if (top){
-            SortStack<T> temp_stack;
-            
-            // pop smaller items until we find the place to push the new value
-            // save the smaller items into a temp stack in reverse order
-            while(top->element < val){
-                temp_stack.simple_push(pop());
-            }
-            
-            // set new top as usual
+            // set new top
             Node<T>* new_top = new Node<T>(val);
             new_top->below = top;
             top = new_top;
-            
-            // load back the temp stack on top of the new val
-            while(!temp_stack.isEmpty()){
-                simple_push(temp_stack.pop());
-            }
-
         } else {
             top = new Node<T>(val);
         }
@@ -81,20 +67,35 @@ public:
         }
         std::cout << std::endl;
     }
-    
+
+    Stack<T> sort_stack(){
+        // origin 
+        // result 5 4 3 2 1
+        // temp   
+        Stack<T> result_stack;
+        
+        while (!isEmpty()){
+            T temp = pop();
+
+            if (result_stack.isEmpty() || result_stack.peek() >= temp){
+                result_stack.push(temp);
+            } else {
+                // if result stack is smaller, we have to pop it into original 
+                // stack until we find the place to put this temp in
+                while(!result_stack.isEmpty() && result_stack.peek() < temp){
+                    push(result_stack.pop());
+                }
+                result_stack.push(temp);
+            }
+        }
+
+        return result_stack;
+
+
+    }
 
 private:
     Node<T>* top;
-
-    void simple_push(T val){
-        if (top){
-            Node<T>* new_top = new Node<T>(val);
-            new_top->below = top;
-            top = new_top;
-        } else {
-            top = new Node<T>(val);
-        }
-    }
 };
 
 #endif

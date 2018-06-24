@@ -15,7 +15,7 @@ isEmpty.
 using namespace std;
 
 int main(){
-    SortStack<int> my_stack;
+    Stack<int> my_stack;
     
     if (my_stack.isEmpty()){
         cout << "sort stack is empty\n";
@@ -28,8 +28,9 @@ int main(){
     my_stack.print();
     my_stack.push(3);
     my_stack.print();
-
-    cout << my_stack.pop() << endl;
-    cout << my_stack.peek() << endl;
+    
+    my_stack = my_stack.sort_stack();
+    my_stack.print();
+    
     return 0;
 }
