@@ -4,17 +4,11 @@
 #include <vector>
 #include <queue>
 
-/* adjacency list representation of a directed graph:
-
-    8 -> 5 -> 4 
-      -> 3 -> 4
-
-*/
-
 using namespace std;
 
 class Node{
 friend class List;
+friend class Graph;
 public:
     Node() : element(0), next(0) { }
     Node(int val) : element(val), next(0) { }
@@ -99,9 +93,35 @@ public:
         }
     }
 
+    bool route_exists(int x, int y){
+        if (x == y){
+            return true;
+        }
+
+        queue<int> my_queue;
+        
+        my_queue.push(x);
+        my_queue.push(y);
+        
+        while(true){
+            if (adjacency_list.find(my_queue.front())){
+                Node* node_pointer = adjacency_list.find(my_queue.front())->second.head;
+            } else {
+                Node* node_pointer= 0;
+            }
+            
+            if (node_pointer){
+                my_queue.push(node_pointer->element);
+                if(node_pointer->element == y){
+                    return true;
+                }
+                node_pointer = node_pointer->next;
+            }
+        }
+    }
+
 private:
     unordered_map<int, List> adjacency_list;
-
 };
 
 
@@ -116,6 +136,12 @@ int main() {
     directed_graph.insert_vertex(2, 3);
 
     directed_graph.print_graph();
+
+    if (directed_graph.route_exists(0, 2)){
+        cout << "Route exists between 0 and 2" << endl;
+    } else {
+        cout << "Route does not exist between 0 and 2" << endl;
+    }
 
     return 0;
 }
