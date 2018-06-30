@@ -70,6 +70,14 @@ public:
         return pointer;
     }
 
+    void print_list(){
+        Node* pointer = head;
+        while (pointer){
+            cout << pointer->element << " ";
+            pointer = pointer->next;
+        }
+    }
+
 private:
     Node* head;
 };
@@ -80,10 +88,14 @@ public:
     Graph() { }
     
     void insert_vertex(int root, int new_value){
-        Node* root_node = adjacency_list[new_value].search(root);
-        if (!root_node){
-            adjacency_list[new_value].insert(root);
+        adjacency_list[root].insert(new_value);
+    }
 
+    void print_graph(){
+        for (auto i = adjacency_list.begin(); i != adjacency_list.end(); ++i){
+            cout << i->first << " : ";
+            i->second.print_list();
+            cout << endl;
         }
     }
 
@@ -96,7 +108,14 @@ private:
 
 int main() {
     Graph directed_graph;
-    directed_graph.insert_vertex(5, 8);
+    directed_graph.insert_vertex(0, 1);
+    directed_graph.insert_vertex(0, 4);
+    directed_graph.insert_vertex(4, 1);
+    directed_graph.insert_vertex(4, 3);
+    directed_graph.insert_vertex(1, 2);
+    directed_graph.insert_vertex(2, 3);
+
+    directed_graph.print_graph();
 
     return 0;
 }
