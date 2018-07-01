@@ -103,20 +103,23 @@ public:
         my_queue.push(x);
         my_queue.push(y);
         
-        while(true){
-            if (adjacency_list.find(my_queue.front())){
-                Node* node_pointer = adjacency_list.find(my_queue.front())->second.head;
+        while(!my_queue.empty()){
+            Node* node_pointer;
+            if (adjacency_list.find(my_queue.front()) != adjacency_list.end()){
+                node_pointer = adjacency_list.find(my_queue.front())->second.head;
             } else {
-                Node* node_pointer= 0;
+                node_pointer= 0;
             }
             
             if (node_pointer){
                 my_queue.push(node_pointer->element);
-                if(node_pointer->element == y){
+                if(node_pointer->element == y || node_pointer->element == x){
                     return true;
                 }
                 node_pointer = node_pointer->next;
             }
+
+            my_queue.pop();
         }
     }
 
@@ -134,6 +137,7 @@ int main() {
     directed_graph.insert_vertex(4, 3);
     directed_graph.insert_vertex(1, 2);
     directed_graph.insert_vertex(2, 3);
+    directed_graph.insert_vertex(10, 15);
 
     directed_graph.print_graph();
 
@@ -141,6 +145,13 @@ int main() {
         cout << "Route exists between 0 and 2" << endl;
     } else {
         cout << "Route does not exist between 0 and 2" << endl;
+    }
+
+
+    if (directed_graph.route_exists(4, 15)){
+        cout << "Route exists between 4 and 15" << endl;
+    } else {
+        cout << "Route does not exist between 4 and 15" << endl;
     }
 
     return 0;
